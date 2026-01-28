@@ -3,7 +3,7 @@ import requests
 from PIL import Image, ImageTk
 from io import BytesIO
 
-# ================= CONFIG ================= #
+
 
 API_KEY = "914be16d1d73f2f6b057eb38b7b69a91"
 is_celsius = True
@@ -12,7 +12,7 @@ BG_COLOR = "#87CEEB"
 BTN_COLOR = "#19BA51"
 TEXT_COLOR = "#C11E1E"
 
-# ================= FUNCTIONS ================= #
+#functions 
 
 def clear_placeholder(event):
     if city_entry.get() == "Enter city name":
@@ -45,7 +45,7 @@ def get_weather():
             icon_label.config(image="")
             return
 
-        # -------- DATA -------- #
+        #data
         city_name = data["name"]
         temp_k = data["main"]["temp"]
         humidity = data["main"]["humidity"]
@@ -53,7 +53,7 @@ def get_weather():
         description = data["weather"][0]["description"].capitalize()
         icon_code = data["weather"][0]["icon"]
 
-        # -------- TEMP -------- #
+       
         if is_celsius:
             temp = temp_k - 273.15
             unit = "°C"
@@ -61,14 +61,14 @@ def get_weather():
             temp = (temp_k - 273.15) * 9/5 + 32
             unit = "°F"
 
-        # -------- UPDATE UI -------- #
+       
         location_label.config(text=f"City: {city_name}")
         temp_label.config(text=f"Temperature: {temp:.2f} {unit}")
         desc_label.config(text=f"Weather: {description}")
         humidity_label.config(text=f"Humidity: {humidity}%")
         wind_label.config(text=f"Wind Speed: {wind} m/s")
 
-        # -------- ICON -------- #
+       
         icon_url = f"https://openweathermap.org/img/wn/{icon_code}@2x.png"
         icon_response = requests.get(icon_url)
         icon_image = Image.open(BytesIO(icon_response.content))
@@ -80,7 +80,7 @@ def get_weather():
     except Exception as e:
         location_label.config(text="Error fetching data")
 
-# ================= GUI ================= #
+#GUI
 
 root = tk.Tk()
 root.title("Weather App by Nikhil singh")
@@ -145,3 +145,4 @@ wind_label = tk.Label(root, font=("Arial", 12), bg=BG_COLOR)
 wind_label.pack(pady=5)
 
 root.mainloop()
+
